@@ -57,3 +57,28 @@ body {
 
 	box-shadow: 0px 5px 15px #888;
 }
+
+
+.addButton {
+	background-color: #F00;
+	color: #FFF;
+
+	font-size: 2em;
+	text-align: center;
+
+	height: 40px;
+	width: 40px;
+
+	border-radius: 20px;
+
+	position: absolute;
+
+	bottom: 2%;
+
+	right: 50%;
+
+
+	box-shadow: 1px 5px 15px #888;
+
+	cursor: pointer;
+}

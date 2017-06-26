@@ -103,7 +103,7 @@ body {
 }
 
 
-.doneButton, .deleteButton {
+.doneButton, .deleteButton, .editButton {
 	cursor: pointer;
 }
 
@@ -125,10 +125,17 @@ body {
 
 	bottom: 2%;
 
-	right: 50%;
+	right: 43%;
 
 
 	box-shadow: 1px 5px 15px #888;
 
 	cursor: pointer;
+}
+
+
+@media screen and (max-width: 400px) {
+	.textDiv {
+		font-size: 1.5em;
+	}
 }

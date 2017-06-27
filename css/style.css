@@ -110,6 +110,71 @@ body {
 }
 
 
+.todoModal {
+	position: absolute;
+
+	height: 100%;
+	width: 100%;
+	background-color: rgba(0, 0, 0, 0.2);
+
+	display: none;
+	justify-content: center;
+	align-items: center;
+}
+
+
+.modalBody {
+	background-color: #FFF;
+	height: 30%;
+	width: 70%;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+
+	border-radius: 10px;
+}
+
+
+.inputText {
+	height: 20%;
+	width: 50%;
+	padding: 10px;
+
+	font-size: 1.5em;
+	border-radius: 10px;
+}
+
+
+.modalButtons {
+	padding-top: 2%;
+	width: 80%;
+	display: flex;
+	justify-content: space-around;
+}
+
+
+.closeModal, .submit {
+	font-weight: bold;
+	padding: 10px;
+	color: #FFF;
+	box-shadow: 0px 2px 5px #888;
+
+	cursor: pointer;
+}
+
+
+.closeModal {
+	background-color: #F00;
+}
+
+
+.submit {
+	background-color: #529c5b;
+}
+
+
 .addButton {
 	background-color: #F00;
 	color: #FFF;

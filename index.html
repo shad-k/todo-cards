@@ -8,9 +8,12 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
 </head>
 <body>
+	<!-- Main container -->
 	<main class="main">
+		<!-- Arrow for previous todo card -->
 		<div class="leftArrow">&#9756;</div>
 
+		<!-- Container for todo cards -->
 		<div class="cards">
 			<div class="card">
 
@@ -38,9 +41,24 @@
 			</div>
 		</div>
 
+		<!-- Arrow for next todo card-->
 		<div class="rightArrow">&#9758;</div>
 
+		<!-- Button for showing a modal to get details of the todo to be added -->
 		<div class="addButton">+</div>
+
+		<!-- Modal that prompts user to enter the text content of the new todo -->
+		<div class="todoModal">
+			<div class="modalBody">
+				<h2>Add New Todo</h2>
+				<input type="text" class="inputText"
+					placeholder="Do something important..." autofocus>
+				<div class="modalButtons">
+					<div class="closeModal">Close</div>
+					<div class="submit">Submit</div>
+				</div>
+			</div>
+		</div>
 
 	</main>
 

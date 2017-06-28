@@ -201,6 +201,12 @@ body {
 }
 
 
+.defaultMsg {
+	font-size: 1.5em;
+	font-weight: bold;
+}
+
+
 @media screen and (max-width: 400px) {
 	.textDiv {
 		font-size: 1.5em;

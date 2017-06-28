@@ -43,7 +43,35 @@ $(function() {
 			});
 		},
 		addNewTodo: function(todo) {
-			console.log(todo);
+			// Get the user locale
+			var language = (navigator.language || navigator.browserLanguage);
+
+			// Get the current date
+			var dateObj = new Date();
+
+			// Convert to a readable format in the current locale
+			var date = dateObj.toLocaleDateString(language);
+
+			var html = '<div class="card"> ' +
+							'<div class="actionDiv">' +
+								'<div class="deleteButton">' +
+									'<i class="fa fa-trash-o" aria-hidden="true"></i>' +
+								'</div>' +
+								'<div class="doneButton">' +
+									'<i class="fa fa-check" aria-hidden="true"></i>' +
+								'</div>' +
+								'<div class="editButton">' +
+									'<i class="fa fa-pencil-square-o" aria-hidden="true"></i>' +
+								'</div>' +
+							'</div>' +
+							'<div class="textDiv">' +
+								'<span class="text">' + todo + '</span>' +
+							'</div>' +
+							'<div class="dateDiv">' +
+								'<span class="date">' + date + '</span>' +
+							'</div>' +
+						'</div>';
+			$(".cards").append(html);
 		}
 	}
 

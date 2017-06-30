@@ -93,17 +93,6 @@ var View = {
 		var language = (navigator.language || navigator.browserLanguage);
 
 		var html = '<div class="card"> ' +
-						'<div class="actionDiv">' +
-							'<div class="deleteButton">' +
-								'<i class="fa fa-trash-o" aria-hidden="true"></i>' +
-							'</div>' +
-							'<div class="doneButton">' +
-								'<i class="fa fa-check" aria-hidden="true"></i>' +
-							'</div>' +
-							'<div class="editButton">' +
-								'<i class="fa fa-pencil-square-o" aria-hidden="true"></i>' +
-							'</div>' +
-						'</div>' +
 						'<div class="textDiv">' +
 							'<span class="text">' + todo.text + '</span>' +
 						'</div>' +

@@ -105,11 +105,6 @@ body {
 }
 
 
-.doneButton, .deleteButton, .editButton {
-	cursor: pointer;
-}
-
-
 .todoModal {
 	position: absolute;
 
@@ -175,29 +170,73 @@ body {
 }
 
 
-.addButton {
-	background-color: #F00;
+.actionButtons {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 50%;
+	position: absolute;
+	bottom: 4%;
+	right: 25%;
+}
+
+
+.addButton, .doneButton, .deleteButton, .editButton {
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	color: #FFF;
 
 	font-size: 2em;
 	text-align: center;
 	font-weight: bold;
 
-	height: 40px;
-	width: 40px;
+	height: 50px;
+	width: 50px;
 
-	border-radius: 20px;
-
-	position: absolute;
-
-	bottom: 2%;
-
-	right: 50%;
-
+	border-radius: 25px;
 
 	box-shadow: 1px 5px 15px #888;
 
 	cursor: pointer;
+}
+
+
+.addButton {
+	background-color: #0e921f;
+}
+
+
+.doneButton {
+	background-color: #09F;
+}
+
+.deleteButton {
+	background-color: #F00;
+}
+
+.editButton {
+	background-color: #e88913;
+}
+
+
+.addButton:hover, .doneButton:hover, .deleteButton:hover, .editButton:hover {
+	-moz-transform: scale(1.4);
+	-ms-transform: scale(1.4);
+	transform: scale(1.4);
+}
+
+
+.doneButton {
+	background-color: #09F;
+}
+
+.deleteButton {
+	background-color: #F00;
+}
+
+.editButton {
+	background-color: #e88913;
 }
 
 

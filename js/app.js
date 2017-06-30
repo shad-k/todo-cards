@@ -1,18 +1,20 @@
 
 // Contains all methods related to Data of the App
 var Data = {
-	todos: [],
+	todos: {},
 	init: function() {
-		if(typeof (Storage) !== "undefined") {
-			this.todos = localStorage.getItem("todos") || [];
-			this.todos = JSON.parse(this.todos);
-		} else {
+		// Restoring data from localStorage, if any
+		try{
+			this.todos = JSON.parse(localStorage.getItem("todos")) || {};
+		} catch(e) {
+			// If localStorage is not supported
 			this.todos = null;
 		}
 		return this.todos;
 	},
-	addTodo: function(todo) {
-		this.todos.push(todo);
+	addTodo: function(id, todo) {
+		console.log(id);
+		this.todos[id] = todo;
 	},
 	saveTodos: function() {
 		localStorage.setItem("todos", JSON.stringify(this.todos));
@@ -33,9 +35,8 @@ var App = {
 			Data.saveTodos();
 		}
 	},
-	addTodoToData: function(todo) {
-		console.log(todo);
-		Data.addTodo(todo);
+	addTodoToData: function(id, todo) {
+		Data.addTodo(id, todo);
 	}
 };
 
@@ -44,6 +45,7 @@ var View = {
 	addButton: document.querySelector(".addButton"),
 	todoModal: document.querySelector(".todoModal"),
 	cards: document.querySelector(".cards"),
+	id: 0,
 	init: function(todos) {
 		// Add all bindings
 		this.addBindings();
@@ -67,40 +69,47 @@ var View = {
 		var submit = document.querySelector(".submit");
 		submit.addEventListener("click", function() {
 			var inputText = document.querySelector(".inputText");
+			if(inputText.value.length > 0) {
+				// Get the user locale
+				var language = (navigator.language || navigator.browserLanguage);
 
-			// Get the user locale
-			var language = (navigator.language || navigator.browserLanguage);
+				// Get the current date
+				var dateObj = new Date();
 
-			// Get the current date
-			var dateObj = new Date();
+				// Convert to a readable format in the current locale
+				var date = dateObj.toLocaleDateString(language);
+				var todo = 	{
+								text: inputText.value,
+								date: date,
+								done: false
+							};
+				View.addNewTodo(++View.id, todo);
+				View.todoModal.style.display = "none";
+				inputText.value = "";
 
-			// Convert to a readable format in the current locale
-			var date = dateObj.toLocaleDateString(language);
-			var todo = 	{
-							text: inputText.value,
-							date: date
-						};
-			View.addNewTodo(todo);
-			View.todoModal.style.display = "none";
-			inputText.value = "";
-
-			App.addTodoToData(todo);
+				App.addTodoToData(View.id, todo);
+			} else {
+				alert("Please enter some text!");
+			}
 		});
 	},
 	addTodos: function(todos) {
 		if(todos) {
-			for(var i = 0; i < todos.length; i++) {
-				this.addNewTodo(todos[i]);
+			console.log(todos);
+			for(var i in todos) {
+				if(todos[i].text.length > 0) {
+					this.addNewTodo(i, todos[i]);
+					this.id = i;
+					console.log(this.id);
+				}
 			}
 		} else {
 			alert("Your browser does not support local storage." +
 				" Please use a browser that support local storage to enjoy the app!");
 		}
 	},
-	addNewTodo: function(todo) {
-		console.log(todo);
-
-		var html = '<div class="card"> ' +
+	addNewTodo: function(id, todo) {
+		var html = '<div class="card" id="'+ id +'"> ' +
 						'<div class="textDiv">' +
 							'<span class="text">' + todo.text + '</span>' +
 						'</div>' +
@@ -110,6 +119,10 @@ var View = {
 					'</div>';
 
 		this.cards.innerHTML += html;
+
+		if(todo.done) {
+			this.markAsDone(id, todo);
+		}
 	}
 }
 

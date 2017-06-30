@@ -13,11 +13,13 @@ var Data = {
 		return this.todos;
 	},
 	addTodo: function(id, todo) {
-		console.log(id);
 		this.todos[id] = todo;
 	},
 	saveTodos: function() {
 		localStorage.setItem("todos", JSON.stringify(this.todos));
+	},
+	deleteTodo: function(id) {
+		delete this.todos[id];
 	},
 	markAsDone: function(id) {
 		this.todos[id].done = !this.todos[id].done;
@@ -40,6 +42,9 @@ var App = {
 	},
 	addTodoToData: function(id, todo) {
 		Data.addTodo(id, todo);
+	},
+	deleteTodo: function(id) {
+		Data.deleteTodo(id);
 	},
 	markAsDone: function(id) {
 		Data.markAsDone(id);
@@ -96,6 +101,7 @@ var View = {
 				inputText.value = "";
 
 				View.currentTodo = View.id;
+				console.log(View.currentTodo);
 
 				App.addTodoToData(View.id, todo);
 			} else {
@@ -113,14 +119,18 @@ var View = {
 			if(todos.length > 0) {
 				for(var i = 0; i < todos.length; i++) {
 					// Find the top most todo
-					if(todos[i].id === View.currentTodo) {
+					if(todos[i].id == View.currentTodo) {
 						// And delete it
+						console.log(View.currentTodo, todos[i].id);
 						View.cards.removeChild(todos[i]);
+						App.deleteTodo(View.currentTodo);
 						// Update the current todo
 						if(i > 0)
 							View.currentTodo = todos[i - 1].id;
-						else
+						else {
 							View.currentTodo = 0;
+							View.id = 0;
+						}
 						break;
 					}
 				}

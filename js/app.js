@@ -18,6 +18,9 @@ var Data = {
 	},
 	saveTodos: function() {
 		localStorage.setItem("todos", JSON.stringify(this.todos));
+	},
+	markAsDone: function(id) {
+		this.todos[id].done = !this.todos[id].done;
 	}
 };
 
@@ -37,6 +40,9 @@ var App = {
 	},
 	addTodoToData: function(id, todo) {
 		Data.addTodo(id, todo);
+	},
+	markAsDone: function(id) {
+		Data.markAsDone(id);
 	}
 };
 
@@ -45,9 +51,9 @@ var View = {
 	addButton: document.querySelector(".addButton"),
 	todoModal: document.querySelector(".todoModal"),
 	cards: document.querySelector(".cards"),
-	deleteButton: document.querySelector(".deleteButton"),
 	id: 0,
 	currentTodo: 0,
+
 	init: function(todos) {
 		// Add all bindings
 		this.addBindings();
@@ -97,23 +103,36 @@ var View = {
 			}
 		});
 
-		this.deleteButton.addEventListener("click", function() {
-			var current = document.getElementById(View.currentTodo);
+		var deleteButton = document.querySelector(".deleteButton");
 
+		// Fired when delete button is clicked
+		deleteButton.addEventListener("click", function() {
+			// Get all the todos available
 			var todos = document.querySelectorAll(".card");
-			var prevTodo;
+
 			if(todos.length > 0) {
 				for(var i = 0; i < todos.length; i++) {
+					// Find the top most todo
 					if(todos[i].id === View.currentTodo) {
+						// And delete it
 						View.cards.removeChild(todos[i]);
+						// Update the current todo
 						if(i > 0)
-							prevTodo = todos[i - 1].id;
+							View.currentTodo = todos[i - 1].id;
+						else
+							View.currentTodo = 0;
 						break;
 					}
 				}
-				View.currentTodo = prevTodo;
 			}
-			// View.cards.removeChild(current);
+		});
+
+
+		var doneButton = document.querySelector(".doneButton");
+
+		doneButton.addEventListener("click", function() {
+			View.markAsDone(View.currentTodo);
+			App.markAsDone(View.currentTodo);
 		});
 	},
 	addTodos: function(todos) {
@@ -146,6 +165,9 @@ var View = {
 		if(todo.done) {
 			this.markAsDone(id, todo);
 		}
+	},
+	markAsDone: function(id) {
+		document.getElementById(id).classList.toggle("done");
 	}
 }
 

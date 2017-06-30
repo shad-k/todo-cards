@@ -246,6 +246,12 @@ body {
 }
 
 
+.done {
+	background-color: #0F0;
+	color: #FFF;
+}
+
+
 @media screen and (max-width: 400px) {
 	.textDiv {
 		font-size: 1.5em;

@@ -45,7 +45,9 @@ var View = {
 	addButton: document.querySelector(".addButton"),
 	todoModal: document.querySelector(".todoModal"),
 	cards: document.querySelector(".cards"),
+	deleteButton: document.querySelector(".deleteButton"),
 	id: 0,
+	currentTodo: 0,
 	init: function(todos) {
 		// Add all bindings
 		this.addBindings();
@@ -87,10 +89,31 @@ var View = {
 				View.todoModal.style.display = "none";
 				inputText.value = "";
 
+				View.currentTodo = View.id;
+
 				App.addTodoToData(View.id, todo);
 			} else {
 				alert("Please enter some text!");
 			}
+		});
+
+		this.deleteButton.addEventListener("click", function() {
+			var current = document.getElementById(View.currentTodo);
+
+			var todos = document.querySelectorAll(".card");
+			var prevTodo;
+			if(todos.length > 0) {
+				for(var i = 0; i < todos.length; i++) {
+					if(todos[i].id === View.currentTodo) {
+						View.cards.removeChild(todos[i]);
+						if(i > 0)
+							prevTodo = todos[i - 1].id;
+						break;
+					}
+				}
+				View.currentTodo = prevTodo;
+			}
+			// View.cards.removeChild(current);
 		});
 	},
 	addTodos: function(todos) {
@@ -100,7 +123,7 @@ var View = {
 				if(todos[i].text.length > 0) {
 					this.addNewTodo(i, todos[i]);
 					this.id = i;
-					console.log(this.id);
+					View.currentTodo = i;
 				}
 			}
 		} else {

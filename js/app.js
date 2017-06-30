@@ -4,7 +4,8 @@ var Data = {
 	todos: [],
 	init: function() {
 		if(typeof (Storage) !== "undefined") {
-			this.todos = JSON.parse(localStorage.getItem("todos")) || [];
+			this.todos = localStorage.getItem("todos") || [];
+			this.todos = JSON.parse(this.todos);
 		} else {
 			this.todos = null;
 		}
@@ -12,6 +13,9 @@ var Data = {
 	},
 	addTodo: function(todo) {
 		this.todos.push(todo);
+	},
+	saveTodos: function() {
+		localStorage.setItem("todos", JSON.stringify(this.todos));
 	}
 };
 
@@ -23,12 +27,15 @@ var App = {
 			View.init(todos);
 		}
 
-		window.onclose = function() {
+		window.onbeforeunload = function() {
+			console.log("closing");
 			// Save current todos list
+			Data.saveTodos();
 		}
 	},
 	addTodoToData: function(todo) {
-		Data.addTodoToData(todo);
+		console.log(todo);
+		Data.addTodo(todo);
 	}
 };
 
@@ -61,6 +68,9 @@ var View = {
 		submit.addEventListener("click", function() {
 			var inputText = document.querySelector(".inputText");
 
+			// Get the user locale
+			var language = (navigator.language || navigator.browserLanguage);
+
 			// Get the current date
 			var dateObj = new Date();
 
@@ -89,8 +99,6 @@ var View = {
 	},
 	addNewTodo: function(todo) {
 		console.log(todo);
-		// Get the user locale
-		var language = (navigator.language || navigator.browserLanguage);
 
 		var html = '<div class="card"> ' +
 						'<div class="textDiv">' +

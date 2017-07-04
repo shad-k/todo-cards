@@ -175,6 +175,30 @@ var View = {
 			text[View.currentTodo - 1].innerHTML = editText;
 		});
 
+
+		var leftArrow = document.querySelector(".leftArrow");
+		leftArrow.addEventListener("click", function() {
+			var todos = document.querySelectorAll(".card");
+
+			if(View.currentTodo > 1) {
+				console.log(View.currentTodo);
+				todos[View.currentTodo - 1].style.zIndex = 0;
+				View.currentTodo--;
+				todos[View.currentTodo - 1].style.zIndex = 100;
+			}
+		});
+
+		var rightArrow = document.querySelector(".rightArrow");
+		rightArrow.addEventListener("click", function() {
+			var todos = document.querySelectorAll(".card");
+
+			if(View.currentTodo <= todos.length - 1) {
+				console.log(View.currentTodo);
+				todos[View.currentTodo - 1].style.zIndex = 0;
+				View.currentTodo++;
+				todos[View.currentTodo - 1].style.zIndex = 100;
+			}
+		});
 	},
 	addTodos: function(todos) {
 		if(todos) {

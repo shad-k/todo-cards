@@ -23,6 +23,9 @@ var Data = {
 	},
 	markAsDone: function(id) {
 		this.todos[id].done = !this.todos[id].done;
+	},
+	editTodo: function(id, text) {
+		this.todos[id].text = text;
 	}
 };
 
@@ -48,6 +51,9 @@ var App = {
 	},
 	markAsDone: function(id) {
 		Data.markAsDone(id);
+	},
+	editTodo: function(id, text) {
+		Data.editTodo(id, text);
 	}
 };
 
@@ -58,7 +64,7 @@ var View = {
 	cards: document.querySelector(".cards"),
 	id: 0,
 	currentTodo: 0,
-
+	editModal: document.querySelector(".editModal"),
 	init: function(todos) {
 		// Add all bindings
 		this.addBindings();
@@ -76,6 +82,12 @@ var View = {
 		var closeModal = document.querySelector(".closeModal");
 		closeModal.addEventListener("click", function() {
 			View.todoModal.style.display = "none";
+		});
+
+		// Hides the modal
+		var close = document.querySelector(".close");
+		close.addEventListener("click", function() {
+			View.editModal.style.display = "none";
 		});
 
 		// Adds a new todo
@@ -137,13 +149,32 @@ var View = {
 			}
 		});
 
-
 		var doneButton = document.querySelector(".doneButton");
 
 		doneButton.addEventListener("click", function() {
 			View.markAsDone(View.currentTodo);
 			App.markAsDone(View.currentTodo);
 		});
+
+
+		var editButton = document.querySelector(".editButton");
+
+		editButton.addEventListener("click", function() {
+			View.editModal.style.display = "flex";
+		});
+
+
+		var edit = document.querySelector(".edit");
+		edit.addEventListener("click", function() {
+			var editText = document.querySelector(".editText").value;
+
+			App.editTodo(View.currentTodo, editText);
+			View.editModal.style.display = "none";
+
+			var text = document.querySelectorAll(".text");
+			text[View.currentTodo - 1].innerHTML = editText;
+		});
+
 	},
 	addTodos: function(todos) {
 		if(todos) {
